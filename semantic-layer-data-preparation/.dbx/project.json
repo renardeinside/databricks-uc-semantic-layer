@@ -1,7 +1,7 @@
 {
     "environments": {
         "default": {
-            "profile": "itrusov-dbx",
+            "profile": "e2-demo-field-eng",
             "workspace_dir": "/Shared/dbx/semantic_layer_data_preparation",
             "artifact_location": "dbfs:/Shared/dbx/projects/semantic_layer_data_preparation"
         }

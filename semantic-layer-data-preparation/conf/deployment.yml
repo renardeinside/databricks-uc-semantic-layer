@@ -21,5 +21,5 @@ environments:
       - name: "semantic-layer-data-preparation"
         <<: *basic-static-cluster
         spark_python_task:
-          python_file: "file://semantic_layer_data_preparation/workloads/sample_etl_job.py"
-          parameters: []
+          python_file: "file://semantic_layer_data_preparation/workloads/data_preparation.py"
+          parameters: ["--conf-file", "file:fuse://conf/data_preparation.yml"]
