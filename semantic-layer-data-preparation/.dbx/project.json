@@ -1,0 +1,9 @@
+{
+    "environments": {
+        "default": {
+            "profile": "itrusov-dbx",
+            "workspace_dir": "/Shared/dbx/semantic_layer_data_preparation",
+            "artifact_location": "dbfs:/Shared/dbx/projects/semantic_layer_data_preparation"
+        }
+    }
+}
