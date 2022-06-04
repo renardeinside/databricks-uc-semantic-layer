@@ -1,4 +1,4 @@
-from semantic_layer_data_preparation.common import Workload
+from uc_semantic_layer.common import Workload
 from typing import List
 from pathlib import Path
 
@@ -17,9 +17,7 @@ class DataPreparationJob(Workload):
         catalog = self.conf["catalog"]
         database = self.conf["database"]
 
-        self.spark.sql(
-            f"CREATE DATABASE IF NOT EXISTS {catalog}.{database}"
-        )
+        self.spark.sql(f"CREATE DATABASE IF NOT EXISTS {catalog}.{database}")
 
         for path in self.list_directories():
             table_name = f"{catalog}.{database}.{path.name}"

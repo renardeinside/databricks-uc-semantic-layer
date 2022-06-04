@@ -1,0 +1,4 @@
+/* this disables button focus behaviour */
+.btn:focus {
+    box-shadow: none !important;
+}

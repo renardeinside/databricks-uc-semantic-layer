@@ -22,6 +22,7 @@ class FileInfoFixture:
     """
     This class mocks the DBUtils FileInfo object
     """
+
     path: str
     name: str
     size: int
@@ -81,9 +82,9 @@ def spark() -> SparkSession:
     warehouse_dir = tempfile.TemporaryDirectory().name
     _builder = (
         SparkSession.builder.master("local[1]")
-            .config("spark.hive.metastore.warehouse.dir", Path(warehouse_dir).as_uri())
-            .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-            .config(
+        .config("spark.hive.metastore.warehouse.dir", Path(warehouse_dir).as_uri())
+        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+        .config(
             "spark.sql.catalog.spark_catalog",
             "org.apache.spark.sql.delta.catalog.DeltaCatalog",
         )
@@ -134,6 +135,8 @@ def dbutils_fixture() -> Iterator[None]:
     :return:
     """
     logging.info("Patching the DBUtils object")
-    with patch("semantic_layer_data_preparation.common.get_dbutils", lambda _: DBUtilsFixture()):
+    with patch(
+        "uc_semantic_layer.common.get_dbutils", lambda _: DBUtilsFixture()
+    ):
         yield
     logging.info("Test session finished, patching completed")
