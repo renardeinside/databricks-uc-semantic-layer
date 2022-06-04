@@ -22,7 +22,7 @@ const Header = () => {
 
 const Main = () => {
   const [naturalLanguageQuery, setNaturalLanguageQuery] = useState("");
-  const [generatedQuery, setGeneratedQuery] = useState("this won't compile");
+  const [generatedQuery, setGeneratedQuery] = useState("");
   const [queryResults, setQueryResults] = useState({});
 
   const onNaturalQuerySubmit = (e) => {
@@ -83,10 +83,10 @@ const Main = () => {
       </Form>
       <Container style={{ "marginTop": "4vh" }}>
         <Container>
-          <p className="h4">Generated SQL Query</p>
           {
             generatedQuery &&
             <div>
+              <p className="h4">Generated SQL Query</p>
               <SyntaxHighlighter language="sql" style={docco} >{generatedQuery}</SyntaxHighlighter>
               <Button
                 variant="outline-secondary"
