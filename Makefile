@@ -10,5 +10,5 @@ dev-run-frontend:
 dev-run-backend:
 	uvicorn uc_semantic_layer.backend.server:app --reload
 
-test-backend:
-	cd uc-semantic-layer && pytest tests/unit/server_test.py
+integration-test-backend:
+	cd uc-semantic-layer && pytest tests
