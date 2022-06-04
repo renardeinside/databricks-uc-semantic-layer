@@ -11,7 +11,7 @@ from uc_semantic_layer.backend.models import NaturalLanguageQuery, SqlQuery, Tab
 from uc_semantic_layer.backend.endpoint_manager import EndpointManager
 from uc_semantic_layer.backend.translator import Translator
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("uc_semantic_layer")
 
 CORS_ORIGINS = [
     "http://localhost",
