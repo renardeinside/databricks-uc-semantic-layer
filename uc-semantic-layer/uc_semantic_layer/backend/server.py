@@ -140,12 +140,12 @@ def read_root():
     return {"status": "working"}
 
 
-def get_sql_query(prepared_prompt: str):
+def get_sql_query(prepared_prompt: str, max_tokens: int = 300):
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prepared_prompt,
         temperature=0.7,
-        max_tokens=300,
+        max_tokens=max_tokens,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
