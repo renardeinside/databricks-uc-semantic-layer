@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
 import axios from 'axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -17,25 +18,12 @@ const Header = () => {
       <Navbar.Brand> <p className="h3"> Semantic query layer with Databricks Unity Catalog and OpenAI </p></Navbar.Brand>
     </Navbar>
   )
-
 }
-
-const products = [];
-const columns = [{
-  dataField: 'id',
-  text: 'Product ID'
-}, {
-  dataField: 'name',
-  text: 'Product Name'
-}, {
-  dataField: 'price',
-  text: 'Product Price'
-}];
 
 const Main = () => {
   const [naturalLanguageQuery, setNaturalLanguageQuery] = useState("");
-  const [generatedQuery, setGeneratedQuery] = useState("SELECT * FROM field_demos.core.customer LIMIT 10");
-  const [queryResults, setQueryResults] = useState(null);
+  const [generatedQuery, setGeneratedQuery] = useState("this won't compile");
+  const [queryResults, setQueryResults] = useState({});
 
   const onNaturalQuerySubmit = (e) => {
     console.log(`Sending natural query to backend: ${naturalLanguageQuery}`);
@@ -48,12 +36,25 @@ const Main = () => {
 
   const onGeneratedQuerySubmit = (e) => {
     console.log(`Sending generated query to backend: ${generatedQuery}`);
-    axios.post('http://localhost:8000/execute_sql', { query: generatedQuery })
+    axios.post('http://localhost:8000/execute_sql', { query: generatedQuery }, { validateStatus: false })
       .then(res => {
         console.log(res.data);
         setQueryResults(res.data);
       })
   };
+
+  let ResultView = () => {
+    return (
+      <div>
+        {
+          ("data" in queryResults) && <div>
+            <p className="h4">Query results</p>
+            <BootstrapTable keyField={queryResults.columns[0].dataField} data={queryResults.data} columns={queryResults.columns} />
+          </div>
+        }
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -81,28 +82,35 @@ const Main = () => {
         </Form.Group>
       </Form>
       <Container style={{ "marginTop": "4vh" }}>
-        <Row>
-          <Col>
-            <p className="h4">Generated SQL Query</p>
-            {
-              generatedQuery &&
-              <div>
-                <SyntaxHighlighter language="sql" style={docco} >{generatedQuery}</SyntaxHighlighter>
-                <Button
-                  variant="outline-secondary"
-                  size="lg"
-                  style={{ "minWidth": "100%", "minHeight": "100%" }}
-                  onClick={onGeneratedQuerySubmit}> Run query!
-                </Button>
-              </div>
-            }
-          </Col>
-          <Col>
-            <p className="h4">Query results</p>
-            <BootstrapTable keyField='id' data={ products } columns={ columns } />
-            {/* {queryResults && <BootstrapTable data={queryResults} />} */}
-          </Col>
-        </Row>
+        <Container>
+          <p className="h4">Generated SQL Query</p>
+          {
+            generatedQuery &&
+            <div>
+              <SyntaxHighlighter language="sql" style={docco} >{generatedQuery}</SyntaxHighlighter>
+              <Button
+                variant="outline-secondary"
+                size="lg"
+                style={{ "minWidth": "100%", "minHeight": "100%" }}
+                onClick={onGeneratedQuerySubmit}> Run this query!
+              </Button>
+            </div>
+          }
+        </Container>
+        <Container>
+          {
+            ("detail" in queryResults) ?
+              // true case - error in the results
+              <Alert variant="danger">
+                Error during executing the provided SQL query:
+                <SyntaxHighlighter>
+                  {queryResults.detail}
+                </SyntaxHighlighter>
+              </Alert> :
+              // false case - results can be shown
+              <ResultView />
+          }
+        </Container>
       </Container>
     </div>
   )

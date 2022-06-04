@@ -1,7 +1,8 @@
 from typing import List
 from databricks import sql
+from databricks.sql.exc import ServerOperationError
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import logging
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,8 +31,10 @@ def get_connection():
 class NaturalQuery(BaseModel):
     payload: str
 
+
 class SqlQuery(BaseModel):
     query: str
+
 
 @dataclass
 class TableInfo:
@@ -85,10 +88,10 @@ class EndpointManager:
             columns = self.get_columns_per_table(table)
             _collected.append(TableInfoWithMetadata(**asdict(table), columns=columns))
         return _collected
-    
+
     def execute_query(self, query: str):
         with self._conn.cursor() as c:
-            return c.execute(query).fetchmany_arrow(100).to_pydict()
+            return c.execute(query).fetchmany_arrow(100)
 
 
 class PromptConstructor:
@@ -119,6 +122,8 @@ connection = get_connection()
 endpoint_manager = EndpointManager(
     connection, os.getenv("DBSQL_CATALOG"), os.getenv("DBSQL_SCHEMA")
 )
+table_infos_with_metadata = endpoint_manager.get_table_infos_with_metadata()
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app.add_middleware(
@@ -140,18 +145,18 @@ def get_sql_query(prepared_prompt: str):
         engine="text-davinci-002",
         prompt=prepared_prompt,
         temperature=0.7,
-        max_tokens=150,
+        max_tokens=300,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
         stop=["#", ";"],
     )
-    return f'SELECT{response["choices"][0].text}'
+    return f'SELECT {response["choices"][0].text}'
 
 
 @app.post("/sql_query")
 def sql_query(req: NaturalQuery):
-    constructor = PromptConstructor(endpoint_manager.get_table_infos_with_metadata())
+    constructor = PromptConstructor(table_infos_with_metadata)
     prepared_prompt = constructor.prepare(req.payload)
     generated_sql_query = get_sql_query(prepared_prompt)
     return {"query": generated_sql_query}
@@ -159,4 +164,13 @@ def sql_query(req: NaturalQuery):
 
 @app.post("/execute_sql")
 def sql_query(req: SqlQuery):
-    return endpoint_manager.execute_query(req.query)
+    try:
+        result = endpoint_manager.execute_query(req.query).to_pandas()
+        # converting results for bootstrap table format
+        formatted = {
+            "columns": [{"dataField": c, "text": c} for c in result.columns],
+            "data": [r.to_dict() for _, r in result.iterrows()],
+        }
+        return formatted
+    except ServerOperationError as e:
+        raise HTTPException(status_code=404, detail=e.message)
