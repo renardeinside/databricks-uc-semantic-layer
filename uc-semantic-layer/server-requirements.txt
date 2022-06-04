@@ -1,0 +1,6 @@
+pandas
+uvicorn[standard]
+openai
+fastapi
+pyarrow
+databricks-sql-connector

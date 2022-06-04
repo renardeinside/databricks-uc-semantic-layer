@@ -8,4 +8,3 @@ dbx
 mlflow
 delta-spark
 scikit-learn
-pandas

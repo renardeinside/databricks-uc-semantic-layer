@@ -13,6 +13,8 @@ import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+
 const Header = () => {
   return (
     <Navbar style={{ "marginBottom": "4vh" }}>
@@ -39,7 +41,7 @@ const Main = () => {
     setGeneratedQuery("");
     setQueryResults({});
     console.log(`Sending natural query to backend: ${naturalLanguageQuery}`);
-    axios.post('http://localhost:8000/sql_query', { payload: naturalLanguageQuery })
+    axios.post(`${BACKEND_URL}/sql_query`, { payload: naturalLanguageQuery })
       .then(res => {
         console.log(res);
         setGeneratedQuery(res.data.query);
@@ -50,7 +52,7 @@ const Main = () => {
   const onGeneratedQuerySubmit = (e) => {
     setSqlQueryLoading(true);
     console.log(`Sending generated query to backend: ${generatedQuery}`);
-    axios.post('http://localhost:8000/execute_sql', { query: generatedQuery }, { validateStatus: false })
+    axios.post(`${BACKEND_URL}/execute_sql`, { query: generatedQuery }, { validateStatus: false })
       .then(res => {
         console.log(res.data);
         setQueryResults(res.data);
