@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 import { useState } from 'react';
 import axios from 'axios';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -24,33 +25,53 @@ const Main = () => {
   const [naturalLanguageQuery, setNaturalLanguageQuery] = useState("");
   const [generatedQuery, setGeneratedQuery] = useState("");
   const [queryResults, setQueryResults] = useState({});
+  const [naturalQueryLoading, setNaturalQueryLoading] = useState(false);
+  const [sqlQueryLoading, setSqlQueryLoading] = useState(false);
+
+  const CenteredSpinner = (props) => {
+    return (
+      <Spinner variant={props.variant} className='d-flex' style={{ margin: '0 auto', width: '10rem', height: '10rem' }} animation="border" />
+    )
+  }
 
   const onNaturalQuerySubmit = (e) => {
+    setNaturalQueryLoading(true);
+    setGeneratedQuery("");
+    setQueryResults({});
     console.log(`Sending natural query to backend: ${naturalLanguageQuery}`);
     axios.post('http://localhost:8000/sql_query', { payload: naturalLanguageQuery })
       .then(res => {
         console.log(res);
         setGeneratedQuery(res.data.query);
+        setNaturalQueryLoading(false);
       })
   };
 
   const onGeneratedQuerySubmit = (e) => {
+    setSqlQueryLoading(true);
     console.log(`Sending generated query to backend: ${generatedQuery}`);
     axios.post('http://localhost:8000/execute_sql', { query: generatedQuery }, { validateStatus: false })
       .then(res => {
         console.log(res.data);
         setQueryResults(res.data);
+        setSqlQueryLoading(false);
       })
   };
 
-  let ResultView = () => {
+  const ResultView = () => {
     return (
-      <div>
+      <div style={{ "marginTop": "4vh", "marginBottom": "10vh" }}>
         {
-          ("data" in queryResults) && <div>
-            <p className="h4">Query results</p>
-            <BootstrapTable keyField={queryResults.columns[0].dataField} data={queryResults.data} columns={queryResults.columns} />
-          </div>
+          sqlQueryLoading ? <CenteredSpinner variant="secondary" /> :
+            <div>
+              {
+                ("data" in queryResults) && <div>
+                  <p className="h4">Query results</p>
+                  <BootstrapTable keyField={queryResults.columns[0].dataField} data={queryResults.data} columns={queryResults.columns} />
+                </div>
+              }
+            </div>
+
         }
       </div>
     );
@@ -75,28 +96,32 @@ const Main = () => {
                 variant="outline-primary"
                 size="lg"
                 style={{ "minWidth": "100%", "minHeight": "100%" }}
-                onClick={onNaturalQuerySubmit}> Generate SQL!
+                onClick={onNaturalQuerySubmit}> Generate SQL
               </Button>
             </Col>
           </Row>
         </Form.Group>
       </Form>
       <Container style={{ "marginTop": "4vh" }}>
-        <Container>
-          {
-            generatedQuery &&
-            <div>
-              <p className="h4">Generated SQL Query</p>
-              <SyntaxHighlighter language="sql" style={docco} >{generatedQuery}</SyntaxHighlighter>
-              <Button
-                variant="outline-secondary"
-                size="lg"
-                style={{ "minWidth": "100%", "minHeight": "100%" }}
-                onClick={onGeneratedQuerySubmit}> Run this query!
-              </Button>
-            </div>
-          }
-        </Container>
+        {naturalQueryLoading ?
+          <CenteredSpinner variant="primary" />
+          :
+          <Container>
+            {
+              generatedQuery &&
+              <div>
+                <p className="h4">Generated SQL Query</p>
+                <SyntaxHighlighter language="sql" style={docco} >{generatedQuery}</SyntaxHighlighter>
+                <Button
+                  variant="outline-secondary"
+                  size="lg"
+                  style={{ "minWidth": "100%", "minHeight": "100%" }}
+                  onClick={onGeneratedQuerySubmit}> Run this query
+                </Button>
+              </div>
+            }
+          </Container>
+        }
         <Container>
           {
             ("detail" in queryResults) ?
