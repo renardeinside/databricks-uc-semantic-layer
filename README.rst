@@ -29,7 +29,8 @@ Technologies used
 Solution architecture
 -----------------------
 
-* TBD - insert here the solution architecture
+.. image:: images/architecture.png
+  :alt: Solution Architecture
 
 How to use
 ----------
