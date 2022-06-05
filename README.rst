@@ -47,6 +47,7 @@ How to use
 2. Get your DBSQL endpoint coordinates from the UI
 3. Get your OpenAI API key 
 4. Generate the data using the job defined in :code:`./uc-semantic-layer`:
+
     1. Configure the catalog and schema in :code:`./uc-semantic-layer/conf/data_preparation.yml`
     2. Run the job (either on the interactive or  as a job):
 
@@ -67,4 +68,4 @@ How to use
 
     make launch
 
-6. Open http://localhost:3000 and enjoy the app! 
+7. Open http://localhost:3000 and enjoy the app! 
