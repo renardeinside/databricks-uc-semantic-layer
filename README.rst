@@ -9,7 +9,13 @@ This is an example application which uses OpenAI, Databricks Unity Catalog and D
 Examples
 --------
 
-* TBD - insert here a couple of videos
+.. image:: images/avg_parts_by_brand.png
+  :alt: Average part size by brand
+
+.. image:: images/count_orders_by_market_segment.png
+  :alt: Average part size by brand
+
+
 
 Technologies used
 -----------------
