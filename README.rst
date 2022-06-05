@@ -48,8 +48,8 @@ How to use
 3. Get your OpenAI API key 
 4. Generate the data using the job defined in :code:`./uc-semantic-layer`:
 
-    1. Configure the catalog and schema in :code:`./uc-semantic-layer/conf/data_preparation.yml`
-    2. Run the job (either on the interactive or  as a job):
+  1. Configure the catalog and schema in :code:`./uc-semantic-layer/conf/data_preparation.yml`
+  2. Run the job (either on the interactive or  as a job):
 
 .. code-block:: bash
     
