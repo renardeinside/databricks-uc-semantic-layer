@@ -8,7 +8,7 @@ custom:
     new_cluster:
       <<: *basic-cluster-props
       num_workers: 1
-      node_type_id: "Standard_E8_v3"
+      node_type_id: "{pass-your-node-type-id}"
 
 # please note that we're using FUSE reference for config file, hence we're going to load this file using its local FS path
 environments:

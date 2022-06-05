@@ -30,3 +30,32 @@ Solution architecture
 -----------------------
 
 * TBD - insert here the solution architecture
+
+How to use
+----------
+
+1. :code:`git clone https://github.com/renardeinside/databricks-uc-semantic-layer.git`
+2. Get your DBSQL endpoint coordinates from the UI
+3. Get your OpenAI API key 
+4. Generate the data using the job defined in :code:`./uc-semantic-layer`:
+    1. Configure the catalog and schema in :code:`./uc-semantic-layer/conf/data_preparation.yml`
+    2. Run the job (either on the interactive or  as a job):
+
+.. code-block:: bash
+    
+    cd uc-semantic-layer
+    # this is to execute on an interactive cluster
+    dbx execute --job=semantic-layer-data-preparation --cluster-name=<interactive-cluster-name> 
+    # this is to launch on automated one, please configure your node_type_id in conf/deployment.yml
+    dbx deploy --job=semantic-layer-data-preparation --files-only
+    dbx launch --job=semantic-layer-data-preparation --as-run-submit --trace
+    cd .. # back to the project root
+
+5. Setup the relevant variables in :code:`.env` file (check :code:`.env.example` for a reference).
+6. Start the services:
+
+.. code-block:: bash
+
+    make launch
+
+6. Open http://localhost:3000 and enjoy the app! 
