@@ -19,10 +19,10 @@ Technologies used
 * `Databricks SQL <https://databricks.com/product/databricks-sql>`_ is the execution engine to run the generated SQL statements
 * `React <https://reactjs.org/>`_ for the frontend application
 
-    * `React Bootstrap <https://react-bootstrap.github.io/>`_ for layout and components style
-    * `React Syntax Highlighter <https://github.com/react-syntax-highlighter/react-syntax-highlighter>`_ for SQL syntax highlighting
-    * `Axios <https://github.com/axios/axios>`_ - HTTP client, used for backend communication
-    * `React Bootstrap Table <https://react-bootstrap-table.github.io/react-bootstrap-table2/>`_ - for table visualization
+  * `React Bootstrap <https://react-bootstrap.github.io/>`_ for layout and components style
+  * `React Syntax Highlighter <https://github.com/react-syntax-highlighter/react-syntax-highlighter>`_ for SQL syntax highlighting
+  * `Axios <https://github.com/axios/axios>`_ - HTTP client, used for backend communication
+  * `React Bootstrap Table <https://react-bootstrap-table.github.io/react-bootstrap-table2/>`_ - for table visualization
 
 * `FastAPI <https://fastapi.tiangolo.com/>`_ for the backend server 
 * `Databricks SQL Connector <https://docs.databricks.com/dev-tools/python-sql-connector.html>`_ to communicate with DBSQL endpoint
