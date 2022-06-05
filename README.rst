@@ -18,6 +18,7 @@ Technologies used
 * `OpenAI API <https://beta.openai.com/examples/default-sql-translate>`_ provides API to generate SQL statements from the natural language
 * `Databricks SQL <https://databricks.com/product/databricks-sql>`_ is the execution engine to run the generated SQL statements
 * `React <https://reactjs.org/>`_ for the frontend application
+
     * `React Bootstrap <https://react-bootstrap.github.io/>`_ for layout and components style
     * `React Syntax Highlighter <https://github.com/react-syntax-highlighter/react-syntax-highlighter>`_ for SQL syntax highlighting
     * `Axios <https://github.com/axios/axios>`_ - HTTP client, used for backend communication
