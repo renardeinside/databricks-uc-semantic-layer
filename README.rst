@@ -23,6 +23,7 @@ Technologies used
     * `React Syntax Highlighter <https://github.com/react-syntax-highlighter/react-syntax-highlighter>`_ for SQL syntax highlighting
     * `Axios <https://github.com/axios/axios>`_ - HTTP client, used for backend communication
     * `React Bootstrap Table <https://react-bootstrap-table.github.io/react-bootstrap-table2/>`_ - for table visualization
+
 * `FastAPI <https://fastapi.tiangolo.com/>`_ for the backend server 
 * `Databricks SQL Connector <https://docs.databricks.com/dev-tools/python-sql-connector.html>`_ to communicate with DBSQL endpoint
 * `OpenAI Python API <https://github.com/openai/openai-python>`_ - for API calls from backend
