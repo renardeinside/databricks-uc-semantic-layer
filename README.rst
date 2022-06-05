@@ -1,7 +1,10 @@
 Building a semantic query layer with Databricks Unity Catalog and OpenAI
 ========================================================================
 
-This is a sample application which uses OpenAI API to generate SQL statements from natural language and execute them against Databricks SQL.
+This is an example application which uses OpenAI, Databricks Unity Catalog and DBSQL and  to convert natural language queries into SQL and execute it against DBSQL.
+
+.. contents:: :local:
+
 
 Examples
 --------
@@ -14,8 +17,16 @@ Technologies used
 * `Databricks Unity Catalog <https://databricks.com/product/unity-catalog>`_ provides metadata about catalogs, schemas and tables
 * `OpenAI API <https://beta.openai.com/examples/default-sql-translate>`_ provides API to generate SQL statements from the natural language
 * `Databricks SQL <https://databricks.com/product/databricks-sql>`_ is the execution engine to run the generated SQL statements
+* `React <https://reactjs.org/>`_ for the frontend application
+    * `React Bootstrap <https://react-bootstrap.github.io/>`_ for layout and components style
+    * `React Syntax Highlighter <https://github.com/react-syntax-highlighter/react-syntax-highlighter>`_ for SQL syntax highlighting
+    * `Axios <https://github.com/axios/axios>`_ - HTTP client, used for backend communication
+    * `React Bootstrap Table <https://react-bootstrap-table.github.io/react-bootstrap-table2/>`_ - for table visualization
+* `FastAPI <https://fastapi.tiangolo.com/>`_ for the backend server 
+* `Databricks SQL Connector <https://docs.databricks.com/dev-tools/python-sql-connector.html>`_ to communicate with DBSQL endpoint
+* `OpenAI Python API <https://github.com/openai/openai-python>`_ - for API calls from backend
 
-Components architecture
+Solution architecture
 -----------------------
 
 * TBD - insert here the solution architecture
