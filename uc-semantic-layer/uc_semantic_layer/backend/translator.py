@@ -30,7 +30,7 @@ class Translator:
         self._logger.info(_expression)
         return "\n".join([el.strip() for el in _expression.split("\n")])
     
-    def _process_api_response(self, prepared_prompt: str, max_tokens: int = 300):
+    def _process_api_response(self, prepared_prompt: str, max_tokens: int = 1200):
         response = openai.Completion.create(
             engine="text-davinci-002",
             prompt=prepared_prompt,

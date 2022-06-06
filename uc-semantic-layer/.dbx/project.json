@@ -1,7 +1,7 @@
 {
     "environments": {
         "default": {
-            "profile": "e2-demo-field-eng",
+            "profile": "DEFAULT",
             "workspace_dir": "/Shared/dbx/semantic_layer_data_preparation",
             "artifact_location": "dbfs:/Shared/dbx/projects/semantic_layer_data_preparation"
         }

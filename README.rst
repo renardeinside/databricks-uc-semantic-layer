@@ -54,6 +54,10 @@ How to use
 .. code-block:: bash
     
     cd uc-semantic-layer
+    # install dbx and other relevant libraries
+    pip install -r unit-requirements.txt
+    # optional - configure dbx to use another profile (by default it uses the DEFAULT one)
+    dbx configure -e default --profile=<some-other-profile-name>
     # this is to execute on an interactive cluster
     dbx execute --job=semantic-layer-data-preparation --cluster-name=<interactive-cluster-name> 
     # this is to launch on automated one, please configure your node_type_id in conf/deployment.yml
