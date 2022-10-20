@@ -1,7 +1,7 @@
 Using OpenAI with Databricks SQL for queries in natural language
 ================================================================
 
-This is an example application which uses OpenAI, Databricks Unity Catalog and DBSQL and  to convert natural language queries into SQL and execute it against DBSQL.
+This is an example application which uses OpenAI, Databricks Unity Catalog and DBSQL to convert natural language queries into SQL and execute it against DBSQL.
 
 .. contents:: :local:
 
